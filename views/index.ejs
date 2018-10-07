@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Medium Bookmarks</title>
+		<title>Medium Marks</title>
 		<style>
 			body {
 				margin: 0 auto;
@@ -12,23 +12,56 @@
 				text-decoration: none;
 			}
 			.bm {
-				border: 1px solid #bbb;
+				border: 1px solid #ccc;
 				border-radius: 0.25rem;
 				margin: 1rem 0;
 				background: #eee;
 				padding: 0.7rem;
 			}
+			.btn {
+				border: none;
+				border-radius: 0.25rem;
+				background: #00a181;
+				color: #eee;
+				padding: 0.5rem;
+				margin: 0.25rem;
+			}
+			button[disabled] { background: #666; color: #fff; }
+			.btn:hover, .btn:focus { cursor: pointer; }
+			.stat { float: right; color: #555; font-style: italic; }
 		</style>
 	</head>
 	<body>
-		<%for (let i=0; i<list.length; i++) { %>
-			<div class="bm">
-				<a href="<%=list[i].link%>">
-					<h2><%=list[i].title%></h2>
-					<p><%=list[i].desc%></p>
-					<span><%=list[i].time_mins%> Mins</span>
-				</a>
-			</div>
-		<% } %>
+		<span class="stat">Showing <%= list.length%> items</span>
+		<span>Sort by</span>
+		<button type="button" class="btn" onclick="sortAZ()">A-Z</button>
+		<button type="button" class="btn" onclick="sortRC()" disabled>Recent</button>
+		<button type="button" class="btn" onclick="sortSF()" disabled>Shortest</button>
+		<button type="button" class="btn" onclick="sortLF()" disabled>Longest</button>
+		<div>
+			<%for (let i=0; i<list.length; i++) { %>
+				<div class="bm">
+					<a href="<%=list[i].link%>">
+						<h2><%=list[i].title%></h2>
+						<p><%=list[i].desc%></p>
+						<span><%=list[i].time_mins%> Mins</span>
+					</a>
+				</div>
+			<% } %>
+		</div>
 	</body>
+	<script>
+		let list = document.getElementsByTagName("a");
+		list = Array.from(list);
+		function sortAZ() {
+			let sort_by_name = (a, b) => {
+		        return a.firstElementChild.innerHTML.toLowerCase()
+		        .localeCompare(b.firstElementChild.innerHTML.toLowerCase());
+		    }
+			list.sort(sort_by_name);
+			for (var i = 0; i < list.length; i++) {
+		        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
+		    }
+		}
+	</script>
 </html>
