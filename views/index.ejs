@@ -34,10 +34,10 @@
 	<body>
 		<span class="stat">Showing <%= list.length%> items</span>
 		<span>Sort by</span>
-		<button type="button" class="btn" onclick="sortAZ()">A-Z</button>
-		<button type="button" class="btn" onclick="sortRC()" disabled>Recent</button>
-		<button type="button" class="btn" onclick="sortSF()">Shortest</button>
-		<button type="button" class="btn" onclick="sortLF()">Longest</button>
+		<button type="button" class="btn" onclick="sortBy(sort_az)">A-Z</button>
+		<button type="button" class="btn" onclick="sortBy(sort_az)" disabled>Recent</button>
+		<button type="button" class="btn" onclick="sortBy(sort_sf)">Shortest</button>
+		<button type="button" class="btn" onclick="sortBy(sort_lf)">Longest</button>
 		<div>
 			<%for (let i=0; i<list.length; i++) { %>
 				<div class="bm">
@@ -53,33 +53,19 @@
 	<script>
 	let list = document.getElementsByTagName("a");
 	list = Array.from(list);
-	function sortAZ() {
-		let sort_by_name = (a, b) =>
-	        a.firstElementChild.innerHTML.toLowerCase()
-	        .localeCompare(b.firstElementChild.innerHTML.toLowerCase());
+	function sortBy(sortFn) {
+		list.sort(sortFn);
+		for (var i = 0; i < list.length; i++) {
+	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
+	    }
+	}
+	const sort_az = (a, b) =>
+	        a.firstElementChild.innerHTML.toLowerCase().localeCompare(b.firstElementChild.innerHTML.toLowerCase());
 
-		list.sort(sort_by_name);
-		for (var i = 0; i < list.length; i++) {
-	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
-	    }
-	}
-	function sortSF() {
-		let sort_sf = (a, b) => 
+	const sort_sf = (a, b) => 
 	        a.lastElementChild.innerHTML.localeCompare(b.lastElementChild.innerHTML, undefined, {numeric: true});
-	    
-		list.sort(sort_sf);
-		for (var i = 0; i < list.length; i++) {
-	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
-	    }
-	}
-	function sortLF() {
-		let sort_lf = (a, b) => 
+
+	const sort_lf = (a, b) => 
 	        b.lastElementChild.innerHTML.localeCompare(a.lastElementChild.innerHTML, undefined, {numeric: true});
-	    
-		list.sort(sort_lf);
-		for (var i = 0; i < list.length; i++) {
-	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
-	    }
-	}
 	</script>
 </html>
