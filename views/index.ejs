@@ -26,7 +26,7 @@
 				padding: 0.5rem;
 				margin: 0.25rem;
 			}
-			button[disabled] { background: #666; color: #fff; }
+			button[disabled] { background: #666; color: #fff; cursor: none;}
 			.btn:hover, .btn:focus { cursor: pointer; }
 			.stat { float: right; color: #555; font-style: italic; }
 		</style>
@@ -36,8 +36,8 @@
 		<span>Sort by</span>
 		<button type="button" class="btn" onclick="sortAZ()">A-Z</button>
 		<button type="button" class="btn" onclick="sortRC()" disabled>Recent</button>
-		<button type="button" class="btn" onclick="sortSF()" disabled>Shortest</button>
-		<button type="button" class="btn" onclick="sortLF()" disabled>Longest</button>
+		<button type="button" class="btn" onclick="sortSF()">Shortest</button>
+		<button type="button" class="btn" onclick="sortLF()">Longest</button>
 		<div>
 			<%for (let i=0; i<list.length; i++) { %>
 				<div class="bm">
@@ -51,17 +51,35 @@
 		</div>
 	</body>
 	<script>
-		let list = document.getElementsByTagName("a");
-		list = Array.from(list);
-		function sortAZ() {
-			let sort_by_name = (a, b) => {
-		        return a.firstElementChild.innerHTML.toLowerCase()
-		        .localeCompare(b.firstElementChild.innerHTML.toLowerCase());
-		    }
-			list.sort(sort_by_name);
-			for (var i = 0; i < list.length; i++) {
-		        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
-		    }
-		}
+	let list = document.getElementsByTagName("a");
+	list = Array.from(list);
+	function sortAZ() {
+		let sort_by_name = (a, b) =>
+	        a.firstElementChild.innerHTML.toLowerCase()
+	        .localeCompare(b.firstElementChild.innerHTML.toLowerCase());
+
+		list.sort(sort_by_name);
+		for (var i = 0; i < list.length; i++) {
+	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
+	    }
+	}
+	function sortSF() {
+		let sort_sf = (a, b) => 
+	        a.lastElementChild.innerHTML.localeCompare(b.lastElementChild.innerHTML, undefined, {numeric: true});
+	    
+		list.sort(sort_sf);
+		for (var i = 0; i < list.length; i++) {
+	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
+	    }
+	}
+	function sortLF() {
+		let sort_lf = (a, b) => 
+	        b.lastElementChild.innerHTML.localeCompare(a.lastElementChild.innerHTML, undefined, {numeric: true});
+	    
+		list.sort(sort_lf);
+		for (var i = 0; i < list.length; i++) {
+	        list[i].parentNode.parentNode.appendChild(list[i].parentNode);
+	    }
+	}
 	</script>
 </html>

@@ -19,6 +19,7 @@ mongoose.connect(env.mongoURI)
 	.catch((err) => console.log(err));
 	
 app.use(express.static(__dirname + "/views"));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/bookmarks", async (req, res) => {
 	let list = await getBMs();
