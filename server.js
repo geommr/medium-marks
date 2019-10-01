@@ -1,8 +1,7 @@
 const express = require("express");
-const mongoose = require("mongoose"); // not yet required
 const request = require("request");
 const cheerio = require("cheerio");
-const env = require("./env");
+const env = require("./sample_env");
 const port = process.env.PORT || env.PORT;
 const bookmarksOptions = {
   url: `https://medium.com/me/list/bookmarks?limit=${env.LIMIT}`,
@@ -13,10 +12,6 @@ const bookmarksOptions = {
 
 const app = express();
 app.set("view engine", "ejs");
-
-mongoose.connect(env.mongoURI)
-	.then(() => console.log("MongoDB connected"))
-	.catch((err) => console.log(err));
 	
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/public"));
