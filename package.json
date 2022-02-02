@@ -16,7 +16,7 @@
     "event-stream": "^4.0.1",
     "express": "^4.16.3",
     "request": "^2.88.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
